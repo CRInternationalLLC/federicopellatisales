@@ -1,0 +1,1353 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Marco Petta — Guitar Coach</title>
+<!-- FONTS -->
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;0,900;1,700&family=Barlow:wght@300;400;600&display=swap" rel="stylesheet"/>
+<style>
+h1, h2, h3, .h-title, .h-title span, .t-rock, .nav-logo,
+.h3t-line1, .h3t-line2, .bwm, .bgwm, .stat-n, .btn, .f-logo {
+  font-family: 'Black Ops One', Impact, sans-serif !important;
+}
+</style>
+
+<style>
+/* ═══════════════════════════════════
+   ROCK DESIGN SYSTEM
+   ───────────────────────────────────
+   PALETTE
+     #0a0a0a  coal black
+     #111      section alt
+     #F5A623  amber/gold (strings)
+     #E63232  red accent (danger/energy)
+     #fff     white
+   FONTS
+     H1/H2  : Impact — raw, military, rock
+     H3/H4  : Barlow Condensed 900 italic uppercase
+     BODY   : Barlow Condensed 400
+     LABEL  : Barlow Condensed 300 wide tracking
+   ELEMENTS
+     — Diagonal scratch lines (CSS clip-path)
+     — Noise grain overlay
+     — Red underline accents
+     — Distressed border fragments
+     — High-contrast B&W + amber images
+═══════════════════════════════════ */
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --coal:#0a0a0a; --coal2:#111; --coal3:#1a1a1a;
+  --amber:#F5A623; --red:#E63232; --white:#fff;
+  --dim:rgba(255,255,255,.06);
+  --body:rgba(255,255,255,.62);
+  --frock:'Black Ops One',Impact,sans-serif;
+  --fcond:'Barlow Condensed','Arial Narrow','Helvetica Neue',sans-serif;
+  --fbody:'Barlow','Helvetica Neue','Arial',sans-serif;
+  --p-size:1.08rem;
+  --p-lh:1.85;
+  --p-weight:300;
+  --p-color:rgba(255,255,255,.62);
+}
+html{scroll-behavior:smooth}
+body{background:var(--coal);color:var(--white);font-family:var(--fcond);overflow-x:hidden;cursor:none}
+
+/* ── GLOBAL PARAGRAPH STANDARD ──
+   Applica a TUTTI i <p> del sito:
+   font Barlow (non-condensed), 1.08rem, peso 300, interlinea 1.85
+   Nessun paragrafo deve discostarsi da queste regole. ── */
+p{
+  font-family:var(--fbody);
+  font-weight:var(--p-weight);
+  font-size:var(--p-size);
+  line-height:var(--p-lh);
+  color:var(--p-color);
+}
+/* Classe utility — mantiene la stessa regola ma è richiamabile esplicitamente */
+.t-body{
+  font-family:var(--fbody);
+  font-weight:var(--p-weight);
+  font-size:var(--p-size);
+  line-height:var(--p-lh);
+  color:var(--p-color);
+}
+/* Paragrafi piccoli (disclaimer, label descrittive) */
+.t-body-sm{
+  font-family:var(--fbody);
+  font-weight:300;
+  font-size:.9rem;
+  line-height:1.78;
+  color:rgba(255,255,255,.5);
+}
+/* Hero sub — rimane tracking largo ma stesso peso/family */
+.h-sub{
+  font-family:var(--fbody);
+  font-weight:300;
+  font-size:.85rem;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,.45);
+  margin-bottom:36px;
+}
+
+/* ── GRAIN OVERLAY (always on top) ── */
+body::after{
+  content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='512' height='512' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity:.032;mix-blend-mode:overlay;
+}
+
+/* ── CURSOR ── */
+#cur{position:fixed;width:10px;height:10px;background:var(--amber);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:difference}
+#cur-r{position:fixed;width:36px;height:36px;border:1.5px solid rgba(245,166,35,.4);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .3s,height .3s,border-color .3s}
+@media(hover:none){#cur,#cur-r,body::after{display:none}body{cursor:auto}}
+
+/* ── PROGRESS ── */
+#prog{position:fixed;top:0;left:0;height:3px;background:var(--red);z-index:400;width:0%;box-shadow:0 0 12px var(--red)}
+
+/* ═══ TYPE SYSTEM ═══ */
+/* H1 — unique page title (hero only) */
+h1.t-rock{font-family:var(--frock);line-height:.88;letter-spacing:-.01em;text-transform:uppercase}
+/* H2 — section titles */
+h2.t-rock{font-family:var(--frock);line-height:.95;letter-spacing:.01em;text-transform:uppercase}
+/* H3 — subsection / card titles */
+h3.t-rock{font-family:var(--frock);line-height:1;letter-spacing:.01em;text-transform:uppercase}
+/* Generic rock class (non-heading elements) */
+.t-rock{font-family:var(--frock);line-height:.95;letter-spacing:.01em;text-transform:uppercase}
+.t-rock{font-family:var(--frock);line-height:.95;letter-spacing:.01em;text-transform:uppercase}
+.t-display{font-family:var(--fcond);font-weight:900;font-style:italic;text-transform:uppercase;letter-spacing:.01em}
+.t-h4{font-family:var(--fcond);font-weight:700;font-size:.9rem;letter-spacing:.2em;text-transform:uppercase}
+.t-body{font-family:var(--fbody);font-weight:300;font-size:1rem;line-height:1.78;color:var(--body)}
+.t-label{font-family:var(--fcond);font-weight:300;font-size:.72rem;letter-spacing:.32em;text-transform:uppercase;color:rgba(255,255,255,.32)}
+.amber{color:var(--amber)}
+.red{color:var(--red)}
+
+/* ═══ ROCK DECORATIVE ELEMENTS ═══ */
+/* Diagonal slash accent before elements */
+.slash-accent{
+  display:inline-block;color:var(--red);
+  font-family:var(--fcond);font-weight:900;font-style:italic;
+  margin-right:8px;font-size:1.1em;
+}
+/* Red underline scratch */
+.scratch{
+  position:relative;display:inline-block;
+}
+.scratch::after{
+  content:'';position:absolute;bottom:-4px;left:0;right:0;height:3px;
+  background:var(--red);
+  clip-path:polygon(0 40%,12% 0,100% 30%,88% 100%,0 60%);
+}
+/* Corner brackets — rock/military feel */
+.bracket{
+  position:relative;
+  padding:20px 24px;
+}
+.bracket::before,.bracket::after{
+  content:'';position:absolute;width:16px;height:16px;
+}
+.bracket::before{top:0;left:0;border-top:2px solid var(--amber);border-left:2px solid var(--amber)}
+.bracket::after{bottom:0;right:0;border-bottom:2px solid var(--amber);border-right:2px solid var(--amber)}
+
+/* ═══ BUTTONS ═══ */
+.btn{
+  display:inline-block;font-family:var(--fcond);font-weight:700;font-size:.88rem;
+  letter-spacing:.2em;text-transform:uppercase;text-decoration:none;
+  padding:16px 42px;border:none;cursor:pointer;position:relative;overflow:hidden;
+  clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
+  transition:transform .2s;
+}
+.btn:hover{transform:translateY(-2px) scale(1.02)}
+.btn-primary{background:var(--amber);color:var(--coal)}
+.btn-red{background:var(--red);color:var(--white)}
+.btn-ghost{
+  background:transparent;color:var(--white);
+  clip-path:none;
+  border:1.5px solid rgba(255,255,255,.3);
+  padding:15px 40px;
+  transition:border-color .25s,color .25s,transform .2s;
+}
+.btn-ghost:hover{border-color:var(--amber);color:var(--amber);transform:translateY(-2px)}
+
+/* ═══ LAYOUT ═══ */
+.wrap{max-width:1320px;margin:0 auto;padding:0 64px}
+section{position:relative;overflow:hidden}
+.sp{padding:110px 0}
+
+/* BG WM — always at bottom edge, never overlapping title */
+.bgwm{
+  position:absolute;font-family:var(--frock);
+  font-size:clamp(80px,14vw,200px);
+  color:rgba(255,255,255,.02);
+  pointer-events:none;white-space:nowrap;letter-spacing:.04em;line-height:1;
+  z-index:0;user-select:none;will-change:transform;
+  bottom:0;left:0;
+  /* clip so it never bleeds into content above */
+  mask-image:linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0) 100%);
+  -webkit-mask-image:linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0) 100%);
+}
+
+/* ═══ ANIMATIONS ═══ */
+[data-a]{will-change:transform,opacity}
+[data-a="fu"] {opacity:0;transform:translateY(64px)}
+[data-a="fl"] {opacity:0;transform:translateX(80px)}
+[data-a="fr"] {opacity:0;transform:translateX(-80px)}
+[data-a="zi"] {opacity:0;transform:scale(.80)}
+[data-a="zo"] {opacity:0;transform:scale(1.24)}
+[data-a="zil"]{opacity:0;transform:scale(.84) translateX(-60px)}
+[data-a="zir"]{opacity:0;transform:scale(.84) translateX(60px)}
+[data-a].in{
+  opacity:1!important;transform:none!important;
+  transition:opacity .9s cubic-bezier(.22,1,.36,1),transform .9s cubic-bezier(.22,1,.36,1)
+}
+
+/* ══════════════════════════════════
+   NAV
+══════════════════════════════════ */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:22px 64px;
+  transition:background .4s,padding .35s,border .35s;
+}
+nav.s{background:rgba(10,10,10,.97);backdrop-filter:blur(16px);padding:12px 64px;border-bottom:1px solid var(--dim)}
+.nav-logo{
+  font-family:var(--frock);font-size:1.3rem;letter-spacing:.06em;
+  text-transform:uppercase;line-height:1;
+}
+.nav-logo em{color:var(--amber);font-style:normal}
+/* Red line under logo */
+.nav-logo span{display:block;height:2px;background:var(--red);margin-top:3px;width:100%}
+nav ul{display:flex;gap:40px;list-style:none}
+nav a{
+  font-family:var(--fcond);font-weight:600;font-size:.75rem;letter-spacing:.2em;
+  text-transform:uppercase;color:rgba(255,255,255,.55);text-decoration:none;
+  transition:color .2s;position:relative;
+}
+nav a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:var(--amber);transition:width .3s}
+nav a:hover{color:var(--white)}
+nav a:hover::after{width:100%}
+
+/* ══════════════════════════════════════════════════
+   HERO — CARPETMAN 3-LAYER EFFECT
+   ─────────────────────────────────────────────────
+   LAYER A (z:0)  dark bg photo — sets the scene
+   LAYER B (z:2)  "MARCO PETTA" giant outlined text
+   LAYER C (z:3)  bright photo masked to body shape
+                  → subject covers the text center
+                  → letters spill left + right
+   LAYER D (z:4)  bottom gradient fade to page
+   LAYER E (z:8)  all UI (tag, headline, CTA)
+══════════════════════════════════════════════════ */
+#hero{
+  height:100vh;min-height:720px;
+  position:relative;display:flex;align-items:flex-end;overflow:hidden;
+}
+
+/* ── A: dark background photo ── */
+.h-img{
+  position:absolute;inset:0;z-index:0;
+  will-change:transform;transform:scale(1.08);
+  /*
+   * REPLACE with Marco's rock photo:
+   * url('marco-petta-rock.jpg') center 10% / cover no-repeat
+   * Photo tip: dark bg, subject centred, arms up or guitar pose
+   */
+  background:url('https://images.unsplash.com/photo-1498038432885-c6f3f1b912ee?w=1920&q=90&fit=crop&crop=center') center 15%/cover no-repeat;
+  filter:brightness(.3) grayscale(.35) contrast(1.2);
+}
+
+/* No separate overlay divs needed — all gradients on pseudo-elements */
+.h-grad{display:none}
+.h-red-streak{display:none}
+.h-amber-streak{display:none}
+.h-rays{display:none}
+
+/* ── B: GIANT TEXT — between dark bg and bright cutout ── */
+.h-3d-text{
+  position:absolute;inset:0;z-index:2;
+  display:flex;flex-direction:column;
+  align-items:center;
+  /* alto — la scritta spunta sopra la testa del soggetto */
+  justify-content:flex-start;
+  padding-top:6vh;
+  pointer-events:none;will-change:transform;
+  overflow:visible;
+}
+/* Unica riga: MARCO PETTA — più grande, più visibile */
+.h3t-line1{
+  font-family:var(--frock);
+  font-size:clamp(72px,11.5vw,165px);
+  line-height:.88;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  display:block;white-space:nowrap;
+  color:rgba(165,100,8,.58);
+  user-select:none;
+}
+/* Seconda riga nascosta — tutto su una riga */
+.h3t-line2{
+  display:none;
+}
+
+/* ── C: BRIGHT CUTOUT — same photo, full brightness, body-shaped mask ──
+   The mask is a vertical ellipse that fully reveals the figure in the
+   centre and fades to transparent at the horizontal edges.
+   Result: text letters poke out left and right of the person. ── */
+.h-cutout{
+  position:absolute;inset:0;z-index:3;
+  will-change:transform;
+  background:url('https://images.unsplash.com/photo-1498038432885-c6f3f1b912ee?w=1920&q=90&fit=crop&crop=center') center 15%/cover no-repeat;
+  filter:brightness(.88) grayscale(.1) contrast(1.1);
+
+  /* Vertical ellipse mask: wide enough to cover the figure,
+     narrow enough to let text show on both sides */
+  -webkit-mask-image:radial-gradient(
+    ellipse 36% 88% at 50% 54%,
+    #000 0%,
+    #000 42%,
+    rgba(0,0,0,.82) 60%,
+    rgba(0,0,0,.25) 78%,
+    transparent     100%
+  );
+  mask-image:radial-gradient(
+    ellipse 36% 88% at 50% 54%,
+    #000 0%,
+    #000 42%,
+    rgba(0,0,0,.82) 60%,
+    rgba(0,0,0,.25) 78%,
+    transparent     100%
+  );
+}
+
+/* ── D: bottom & side fades — drawn over cutout so UI sits on clean black ── */
+#hero::after{
+  content:'';position:absolute;inset:0;z-index:4;pointer-events:none;
+  background:
+    /* bottom black fade */
+    linear-gradient(to top,  rgba(10,10,10,1) 0%,  rgba(10,10,10,.5) 18%, transparent 38%),
+    /* left vignette */
+    linear-gradient(to right, rgba(10,10,10,.88) 0%, transparent 28%),
+    /* right vignette */
+    linear-gradient(to left,  rgba(10,10,10,.88) 0%, transparent 28%),
+    /* top fade */
+    linear-gradient(to bottom,rgba(10,10,10,.5) 0%,  transparent 16%);
+}
+
+/* ── E: UI ELEMENTS ── */
+.h-tag{
+  position:absolute;top:92px;left:64px;z-index:8;
+  font-family:var(--fcond);font-weight:300;font-size:.7rem;letter-spacing:.28em;text-transform:uppercase;
+  color:rgba(255,255,255,.5);
+  border-left:2px solid var(--red);padding-left:12px;
+  opacity:0;transform:translateX(-24px);animation:sR .7s .5s forwards;
+}
+@keyframes sR{to{opacity:1;transform:none}}
+
+.h-body{
+  position:relative;z-index:8;
+  padding:0 64px 88px;
+  max-width:780px;
+  opacity:0;transform:translateY(36px);animation:fU .9s .2s forwards;
+}
+@keyframes fU{to{opacity:1;transform:none}}
+.h-body::before{
+  content:'';display:block;width:60px;height:3px;
+  background:linear-gradient(to right,var(--red),var(--amber));
+  margin-bottom:20px;
+}
+.h-title{
+  font-family:var(--frock);
+  font-size:clamp(42px,6vw,88px);
+  line-height:.92;letter-spacing:.01em;text-transform:uppercase;margin-bottom:20px;
+  display:block;
+  white-space:nowrap;
+}
+.h-title span{display:block;white-space:nowrap}
+.h-title .line-amber{color:var(--amber)}
+.h-title .line-red{color:var(--red)}
+.h-sub{
+  font-family:var(--fcond);font-weight:300;font-size:.82rem;
+  letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:36px;
+}
+.h-btns{display:flex;gap:16px;flex-wrap:wrap}
+
+.scroll-ind{
+  position:absolute;bottom:32px;left:50%;transform:translateX(-50%);
+  z-index:8;opacity:0;animation:fU .8s 1.2s forwards;
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+}
+.scroll-lbl{
+  font-family:var(--fcond);font-weight:300;font-size:.62rem;
+  letter-spacing:.28em;text-transform:uppercase;color:rgba(255,255,255,.3);
+}
+.scroll-line{
+  width:1px;height:50px;
+  background:linear-gradient(to bottom,transparent,rgba(255,255,255,.2));
+  position:relative;overflow:hidden;
+}
+.scroll-line::after{
+  content:'';position:absolute;top:-100%;left:0;right:0;height:100%;
+  background:var(--amber);animation:sl 2s 1.6s ease-in-out infinite;
+}
+@keyframes sl{0%{top:-100%}100%{top:200%}}
+
+/* ══════════════════════════════════
+   TICKER
+══════════════════════════════════ */
+.tkr{
+  background:var(--red);padding:10px 0;overflow:hidden;
+  border-top:none;border-bottom:none;
+}
+.tkr-t{display:flex;width:max-content;animation:tk 22s linear infinite}
+.tkr-t span{font-family:var(--fcond);font-weight:700;font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.9);padding:0 28px}
+.tkr-t .sep{color:rgba(255,255,255,.4);padding:0 4px}
+@keyframes tk{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ══════════════════════════════════
+   CHI SONO
+══════════════════════════════════ */
+#chi-sono{background:var(--coal);padding:130px 0 80px}
+
+.chi-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;align-items:center;margin-top:56px}
+
+.chi-l{padding-right:52px}
+.chi-l h3{
+  font-family:var(--frock);font-size:clamp(22px,2.5rem,38px);
+  line-height:1.05;text-transform:uppercase;margin-bottom:28px;
+}
+.chi-l p{margin-bottom:14px}
+.chi-l strong{color:var(--white);font-weight:600}
+.chi-l a{color:var(--amber);text-decoration:none;font-weight:600}
+
+/* Photo — high contrast, amber tint */
+.chi-photo{
+  border-radius:0;overflow:hidden;aspect-ratio:3/4;position:relative;
+  box-shadow:0 40px 80px rgba(0,0,0,.7);
+  /* Red corner accent */
+  outline:2px solid var(--red);
+  outline-offset:-2px;
+}
+.chi-photo::before{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:200px;z-index:2;
+  background:linear-gradient(to top,rgba(10,10,10,.8) 0%,transparent 100%);
+}
+.chi-photo img{width:100%;height:100%;object-fit:cover;object-position:center top;filter:grayscale(.3) contrast(1.1) brightness(.9)}
+
+.chi-r{padding-left:52px;border-left:2px solid var(--red)}
+.chi-r h3{font-family:var(--frock);font-size:clamp(22px,2.5rem,38px);line-height:1.05;text-transform:uppercase}
+.chi-r h3 em{color:var(--amber);font-style:italic}
+
+.stats{display:flex;flex-direction:column;gap:36px;margin-top:44px}
+.stat-n{font-family:var(--frock);font-size:clamp(52px,5.5vw,78px);color:rgba(255,255,255,.14);line-height:1}
+.stat-l{font-family:var(--fcond);font-weight:300;font-size:.68rem;letter-spacing:.26em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-top:4px}
+
+.bwm{font-family:var(--frock);font-size:clamp(58px,13vw,190px);color:rgba(255,255,255,.025);text-align:center;letter-spacing:.04em;text-transform:uppercase;margin-top:32px;line-height:1;pointer-events:none}
+
+/* ══════════════════════════════════
+   COSA FACCIO
+══════════════════════════════════ */
+#cosa-faccio{background:var(--coal2);padding:110px 0}
+
+.srv-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:64px}
+.srv-card{position:relative;aspect-ratio:16/10;overflow:hidden;cursor:pointer}
+.srv-img{position:absolute;inset:0;will-change:transform;transition:transform .6s cubic-bezier(.22,1,.36,1)}
+.srv-card:hover .srv-img{transform:scale(1.07)}
+.srv-img img{width:100%;height:100%;object-fit:cover;filter:brightness(.3) grayscale(.15) contrast(1.1)}
+.srv-grad{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,10,.95) 0%,rgba(10,10,10,.1) 60%,transparent 100%)}
+/* Top accent */
+.srv-card:first-child::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--amber);z-index:3}
+.srv-card:last-child::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--red);z-index:3}
+.srv-wm{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--frock);font-size:clamp(20px,3vw,46px);color:rgba(255,255,255,.04);letter-spacing:.06em;pointer-events:none}
+.srv-body{position:absolute;bottom:0;left:0;right:0;padding:30px 34px;z-index:2}
+.srv-icon{color:var(--amber);font-size:1.4rem;margin-bottom:12px;display:block}
+.srv-card:last-child .srv-icon{color:var(--red)}
+.srv-card h3{font-family:var(--frock);font-size:clamp(18px,2.2vw,30px);text-transform:uppercase;margin-bottom:10px;letter-spacing:.02em}
+.srv-card p{font-size:.95rem;line-height:1.75;color:rgba(255,255,255,.55)}
+
+/* ══════════════════════════════════
+   VIDEO TESTIMONIALS
+══════════════════════════════════ */
+.vtgrid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:16px;
+  margin-top:56px;
+  position:relative;z-index:1;
+}
+
+.vtcard{
+  background:var(--coal3);
+  border:1px solid rgba(255,255,255,.06);
+  overflow:hidden;
+  transition:transform .35s cubic-bezier(.22,1,.36,1), border-color .3s;
+  cursor:pointer;
+}
+.vtcard:hover{
+  transform:translateY(-8px);
+  border-color:rgba(245,166,35,.3);
+}
+
+/* Thumbnail area */
+.vt-thumb{
+  position:relative;
+  aspect-ratio:16/9;
+  overflow:hidden;
+  background:var(--coal);
+}
+.vt-thumb-ph{
+  width:100%;height:100%;
+  position:absolute;inset:0;
+}
+.vt-thumb-img{
+  width:100%;height:100%;
+  object-fit:cover;
+  filter:grayscale(.5) brightness(.6) contrast(1.1);
+  transition:transform .5s cubic-bezier(.22,1,.36,1), filter .4s;
+}
+.vtcard:hover .vt-thumb-img{
+  transform:scale(1.06);
+  filter:grayscale(.2) brightness(.55) contrast(1.1);
+}
+
+/* Dark gradient over thumb */
+.vt-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(
+    to top,
+    rgba(10,10,10,.85) 0%,
+    rgba(10,10,10,.2) 50%,
+    rgba(10,10,10,.1) 100%
+  );
+  z-index:1;
+}
+
+/* Red top bar */
+.vt-topbar{
+  position:absolute;top:0;left:0;right:0;height:3px;
+  background:var(--red);z-index:3;
+}
+
+/* Play button */
+.vt-play{
+  position:absolute;inset:0;z-index:2;
+  display:flex;align-items:center;justify-content:center;
+  background:transparent;border:none;cursor:pointer;
+}
+.vt-play-circle{
+  width:52px;height:52px;
+  border-radius:50%;
+  background:rgba(245,166,35,.92);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--coal);
+  box-shadow:0 0 0 0 rgba(245,166,35,.4);
+  transition:transform .25s, box-shadow .25s, background .25s;
+}
+.vtcard:hover .vt-play-circle{
+  transform:scale(1.12);
+  box-shadow:0 0 0 12px rgba(245,166,35,.15);
+  background:var(--amber);
+}
+
+/* Duration badge */
+.vt-duration{
+  position:absolute;bottom:8px;right:8px;z-index:3;
+  font-family:var(--fcond);font-weight:700;font-size:.68rem;
+  letter-spacing:.1em;color:var(--white);
+  background:rgba(10,10,10,.75);
+  padding:3px 8px;
+}
+
+/* Card body */
+.vt-body{
+  padding:20px;
+  border-top:1px solid rgba(255,255,255,.05);
+}
+.vt-stars{
+  color:var(--amber);font-size:.82rem;letter-spacing:2px;margin-bottom:10px;
+}
+.vt-quote{
+  font-family:var(--fbody);font-weight:300;font-style:italic;
+  font-size:1rem;line-height:1.78;
+  color:rgba(255,255,255,.6);
+  margin-bottom:14px;
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;
+}
+.vt-author{
+  display:flex;align-items:center;gap:10px;
+  padding-top:12px;
+  border-top:1px solid rgba(255,255,255,.05);
+}
+.vt-avatar{
+  width:32px;height:32px;flex-shrink:0;
+  background:var(--red);
+  font-family:var(--frock);font-size:.9rem;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--white);
+}
+.vt-name{
+  font-family:var(--fcond);font-weight:700;font-size:.8rem;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--amber);
+}
+.vt-role{
+  font-family:var(--fbody);font-weight:300;font-size:.72rem;
+  color:rgba(255,255,255,.3);margin-top:2px;
+}
+
+/* Lightbox overlay for video playback */
+#vt-lightbox{
+  display:none;position:fixed;inset:0;z-index:9500;
+  background:rgba(0,0,0,.92);
+  align-items:center;justify-content:center;
+  backdrop-filter:blur(8px);
+}
+#vt-lightbox.open{display:flex}
+.vt-lb-inner{
+  position:relative;width:90%;max-width:900px;
+  aspect-ratio:16/9;background:#000;
+  border:2px solid var(--amber);
+  box-shadow:0 0 60px rgba(245,166,35,.2);
+}
+/* Placeholder where iframe/video goes */
+.vt-lb-placeholder{
+  width:100%;height:100%;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:16px;
+  font-family:var(--frock);font-size:1.2rem;letter-spacing:.06em;
+  color:rgba(255,255,255,.3);text-transform:uppercase;
+  /* REPLACE with: <iframe src="YOUR_VIDEO_URL" ...> or <video src="..."> */
+}
+.vt-lb-placeholder svg{opacity:.2}
+.vt-lb-close{
+  position:absolute;top:-44px;right:0;
+  background:transparent;border:none;
+  font-family:var(--fcond);font-weight:700;font-size:.8rem;letter-spacing:.2em;
+  text-transform:uppercase;color:rgba(255,255,255,.5);
+  cursor:pointer;display:flex;align-items:center;gap:6px;
+  transition:color .2s;
+}
+.vt-lb-close:hover{color:var(--amber)}
+
+@media(max-width:960px){
+  .vtgrid{grid-template-columns:1fr 1fr;gap:12px}
+}
+@media(max-width:600px){
+  .vtgrid{grid-template-columns:1fr}
+}
+
+/* ══════════════════════════════════
+   RISULTATI
+══════════════════════════════════ */
+#risultati{background:var(--coal);padding:110px 0}
+.ris-bg{position:absolute;inset:0;z-index:0;background:url('https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=1920&q=60&fit=crop') center/cover no-repeat;opacity:.05;filter:grayscale(1)}
+
+.rv-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 56px;margin-top:64px;position:relative;z-index:1}
+.rv-grid::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--dim)}
+.rv{padding:30px 0;border-bottom:1px solid var(--dim)}
+.rv:last-child{border-bottom:none}
+.stars{color:var(--amber);letter-spacing:2px;margin-bottom:14px;font-size:.95rem}
+.rv blockquote{
+  font-family:var(--fbody);font-weight:300;font-style:italic;
+  font-size:1.05rem;line-height:1.82;color:rgba(255,255,255,.65);margin-bottom:14px;
+}
+.rv-auth{font-family:var(--fcond);font-weight:700;font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--amber)}
+
+/* ══════════════════════════════════
+   PERCHÉ ME
+══════════════════════════════════ */
+#perche-me{background:var(--coal2);padding:110px 0}
+
+.pm-layout{display:grid;grid-template-columns:1fr 1fr;gap:96px;align-items:start;margin-top:64px}
+.pm-list{list-style:none;display:flex;flex-direction:column;gap:28px}
+.pm-item{display:grid;grid-template-columns:50px 1fr;gap:18px;align-items:start;padding:20px;border:1px solid rgba(255,255,255,.05);position:relative;transition:border-color .3s}
+.pm-item:hover{border-color:rgba(245,166,35,.3)}
+.pm-item::before{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--amber);transition:width .4s cubic-bezier(.22,1,.36,1)}
+.pm-item:hover::before{width:100%}
+.pm-num{font-family:var(--frock);font-size:2.2rem;color:rgba(255,255,255,.08);line-height:1}
+.pm-chk{color:var(--amber);display:block;margin-bottom:5px;font-size:.9rem}
+.pm-txt{font-size:1.05rem;line-height:1.82}
+.pm-txt strong{color:var(--white);font-weight:600}
+
+/* Photo mosaic */
+.photo-mosaic{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:6px;height:440px}
+.mos-img{overflow:hidden;position:relative}
+.mos-img img{width:100%;height:100%;object-fit:cover;filter:grayscale(.4) contrast(1.1) brightness(.75);transition:transform .5s cubic-bezier(.22,1,.36,1),filter .5s}
+.mos-img:hover img{transform:scale(1.07);filter:grayscale(.1) contrast(1.1) brightness(.9)}
+/* amber overlay on hover */
+.mos-img::after{content:'';position:absolute;inset:0;background:var(--amber);opacity:0;transition:opacity .4s}
+.mos-img:hover::after{opacity:.08}
+
+/* ══════════════════════════════════
+   CTA BAND — concert + red
+══════════════════════════════════ */
+#cta-band{position:relative;padding:100px 0;overflow:hidden;text-align:center}
+.cta-bg{
+  position:absolute;inset:0;z-index:0;will-change:transform;
+  background:url('https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=1920&q=70&fit=crop') center 40%/cover no-repeat;
+  filter:brightness(.15) grayscale(.5) contrast(1.2);
+  transform:scale(1.08);
+}
+.cta-over{position:absolute;inset:0;z-index:1;background:linear-gradient(135deg,rgba(10,10,10,.9) 0%,rgba(20,5,5,.8) 100%)}
+/* diagonal red stripe */
+.cta-stripe{position:absolute;inset:0;z-index:2;pointer-events:none;overflow:hidden}
+.cta-stripe::before{
+  content:'';position:absolute;top:0;left:-10%;width:3px;height:100%;
+  background:linear-gradient(to bottom,transparent,var(--red),transparent);
+  transform:skewX(-6deg);left:30%;opacity:.6;
+}
+.cta-content{position:relative;z-index:3}
+.cta-content h2{font-family:var(--frock);font-size:clamp(52px,7vw,96px);line-height:.92;text-transform:uppercase;margin-bottom:24px}
+.cta-content h2 em{color:var(--amber);font-style:normal}
+.cta-content p{max-width:460px;margin:0 auto 36px;text-align:center}
+
+/* ══════════════════════════════════
+   SMARTPHONE
+══════════════════════════════════ */
+#smartphone{background:var(--coal);padding:110px 0}
+
+.ph-layout{display:grid;grid-template-columns:1fr 1fr;gap:88px;align-items:center;margin-top:64px}
+.phones{display:flex;align-items:flex-end;justify-content:center}
+.ph{
+  width:30%;border-radius:18px;overflow:hidden;
+  border:1px solid rgba(255,255,255,.1);
+  aspect-ratio:9/18;position:relative;
+  transition:transform .45s cubic-bezier(.22,1,.36,1);
+}
+.ph:hover{transform:translateY(-12px) scale(1.03)}
+.ph.c{
+  width:36%;border:2px solid var(--amber);z-index:2;
+  transform:translateY(-22px);margin:0 -10px;
+  box-shadow:0 0 40px rgba(245,166,35,.2);
+}
+.ph.c:hover{transform:translateY(-34px) scale(1.03)}
+.ph-bg{width:100%;height:100%;object-fit:cover;filter:brightness(.45) grayscale(.3) contrast(1.1)}
+.ph-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,10,.92) 0%,transparent 50%);display:flex;align-items:flex-end;padding:14px}
+.ph-lbl{font-family:var(--fcond);font-weight:700;font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--amber)}
+
+.feat-list{display:flex;flex-direction:column;gap:32px}
+.feat{display:flex;gap:18px;align-items:flex-start;padding:18px;border:1px solid rgba(255,255,255,.04);transition:border-color .3s,background .3s}
+.feat:hover{border-color:rgba(245,166,35,.25);background:rgba(245,166,35,.03)}
+.feat-ic{flex-shrink:0;width:40px;height:40px;background:var(--coal3);display:flex;align-items:center;justify-content:center;color:var(--amber);font-size:.88rem;clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);transition:background .25s}
+.feat:hover .feat-ic{background:var(--amber);color:var(--coal)}
+.feat h4{font-family:var(--fcond);font-weight:700;font-size:.88rem;letter-spacing:.16em;text-transform:uppercase;margin-bottom:7px}
+.feat p{font-size:1rem}
+
+/* ══════════════════════════════════
+   CONTATTI
+══════════════════════════════════ */
+#contatti{background:var(--coal);padding:110px 0 80px}
+
+.ct-layout{display:grid;grid-template-columns:1fr 1.4fr;gap:96px;align-items:start;margin-top:8px}
+.ct-l h2{font-family:var(--frock);font-size:clamp(52px,6.5vw,90px);line-height:.92;text-transform:uppercase}
+.ct-l h2 span{color:var(--amber);display:block}
+.ct-l p{margin-top:22px;max-width:300px}
+.ct-l .bracket{margin-top:32px;display:inline-block}
+.ct-l .bracket p{font-family:var(--fcond);font-weight:300;font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.35);margin:0}
+
+.ct-form{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.cf-full{grid-column:span 2}
+.fg label{display:block;font-family:var(--fcond);font-weight:300;font-size:.67rem;letter-spacing:.26em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:9px}
+.fg input,.fg textarea{width:100%;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,.12);color:var(--white);font-family:var(--fbody);font-size:1rem;padding:10px 0;outline:none;transition:border-color .25s}
+.fg input::placeholder,.fg textarea::placeholder{color:rgba(255,255,255,.18)}
+.fg input:focus,.fg textarea:focus{border-bottom-color:var(--amber)}
+.fg textarea{resize:none;height:96px}
+.ct-btn{grid-column:span 2;padding:20px;margin-top:8px;font-size:.88rem}
+
+.ct-wm{font-family:var(--frock);font-size:clamp(52px,12vw,168px);color:rgba(255,255,255,.02);text-align:center;letter-spacing:.04em;text-transform:uppercase;margin-top:-10px;line-height:1;pointer-events:none}
+
+/* ══════════════════════════════════
+   FOOTER
+══════════════════════════════════ */
+footer{background:var(--coal2);border-top:1px solid var(--dim);padding:32px 64px;display:flex;align-items:center;justify-content:space-between}
+.f-logo{font-family:var(--frock);font-size:1rem;letter-spacing:.06em;text-transform:uppercase;line-height:1}
+.f-logo em{color:var(--amber);font-style:normal}
+footer p{font-family:var(--fcond);font-size:.7rem;color:rgba(255,255,255,.22);letter-spacing:.1em}
+
+/* ══════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════ */
+@media(max-width:960px){
+  nav,nav.s{padding:14px 24px}
+  nav ul{display:none}
+  .wrap{padding:0 24px}
+  .h-tag{left:24px}
+  .h-body{padding:0 24px 80px}
+  .h-btns{flex-direction:column;align-items:flex-start}
+  .chi-grid,.pm-layout,.ph-layout,.ct-layout{grid-template-columns:1fr;gap:48px}
+  .chi-l,.chi-r{padding:0}
+  .chi-r{border-left:none;border-top:2px solid var(--red);padding-top:32px}
+  .photo-mosaic{height:280px}
+  .srv-grid,.rv-grid{grid-template-columns:1fr}
+  .rv-grid::before{display:none}
+  .ct-form{grid-template-columns:1fr}
+  .cf-full,.ct-btn{grid-column:span 1}
+  footer{flex-direction:column;gap:12px;text-align:center;padding:22px 24px}
+  .sp{padding:72px 0}
+}
+</style>
+</head>
+<body>
+
+<div id="cur"></div>
+<div id="cur-r"></div>
+<div id="prog"></div>
+
+<!-- ═══ NAV ═══ -->
+<nav id="nav">
+  <div class="nav-logo">MARCO <em>PETTA</em><span></span></div>
+  <ul>
+    <li><a href="#chi-sono">Chi Sono</a></li>
+    <li><a href="#cosa-faccio">Cosa Faccio</a></li>
+    <li><a href="#risultati">Risultati</a></li>
+    <li><a href="#perche-me">Perché Me</a></li>
+    <li><a href="#contatti">Contatti</a></li>
+  </ul>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section id="hero">
+
+  <!-- LAYER 1: background photo (darkened) -->
+  <div class="h-img" id="hImg"></div>
+
+  <!-- LAYER 2: cinematic overlays -->
+  <div class="h-grad"></div>
+  <div class="h-red-streak"></div>
+  <div class="h-amber-streak"></div>
+
+  <!-- LAYER 3: GIANT TEXT — sits between bg and cutout photo -->
+  <div class="h-3d-text" id="hWm">
+    <span class="h3t-line1">MARCO PETTA</span>
+  </div>
+
+  <!-- LAYER 4: Cutout photo — covers the center of the text, making Marco appear IN FRONT -->
+  <!-- The mask-image creates a sharp center reveal that hides text behind the subject -->
+  <div class="h-cutout" id="hCutout"></div>
+
+  <!-- LAYER 5: Stage light rays over everything -->
+  <div class="h-rays"></div>
+
+  <!-- Tag top-left -->
+  <div class="h-tag">Guitar Coach — Metodo P.G.T.</div>
+
+  <!-- Content bottom-left -->
+  <div class="h-body">
+    <h1 class="h-title">
+      <span>Smetti di suonare</span>
+      <span class="line-amber">a caso.</span>
+    </h1>
+    <p class="h-sub">Il metodo P.G.T. — per chitarristi che vogliono fare sul serio</p>
+    <div class="h-btns">
+      <a href="#contatti" class="btn btn-primary">Inizia Ora ↗</a>
+      <a href="#chi-sono" class="btn btn-ghost">Scopri di più</a>
+    </div>
+  </div>
+
+  <div class="scroll-ind">
+    <span class="scroll-lbl">scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ═══ TICKER — RED BAR ═══ -->
+<div class="tkr"><div class="tkr-t">
+  <span>ROCK</span><span class="sep"> // </span>
+  <span>GUITAR COACH</span><span class="sep"> // </span>
+  <span>MARCO PETTA</span><span class="sep"> // </span>
+  <span>METODO P.G.T.</span><span class="sep"> // </span>
+  <span>LEZIONI 1-TO-1</span><span class="sep"> // </span>
+  <span>IMPROVVISAZIONE</span><span class="sep"> // </span>
+  <span>ROCK</span><span class="sep"> // </span>
+  <span>GUITAR COACH</span><span class="sep"> // </span>
+  <span>MARCO PETTA</span><span class="sep"> // </span>
+  <span>METODO P.G.T.</span><span class="sep"> // </span>
+  <span>LEZIONI 1-TO-1</span><span class="sep"> // </span>
+  <span>IMPROVVISAZIONE</span><span class="sep"> // </span>
+</div></div>
+
+<!-- ═══ CHI SONO ═══ -->
+<section id="chi-sono" class="sp">
+  <div class="bgwm" id="wm1" style="bottom:0;left:0;top:auto">CHI SONO</div>
+  <div class="wrap" style="position:relative;z-index:1">
+
+    <span class="t-label" data-a="fr" style="display:block;margin-bottom:14px">Chi Sono</span>
+    <h2 class="t-rock" style="font-size:clamp(48px,7vw,100px);margin-bottom:52px" data-a="fu">
+      Marco Petta — <span class="amber">Guitar Coach</span>
+    </h2>
+
+    <div class="chi-grid">
+      <div class="chi-l" data-a="fr">
+        <h3 class="t-rock" style="font-size:clamp(20px,2.2rem,34px);margin-bottom:28px">Il metodo che unisce<br>teoria e <span class="amber">pratica reale</span></h3>
+        <p>Per anni ho vissuto la stessa frustrazione: ore di studio, scale ripetute all'infinito, ma appena arrivava il momento di improvvisare… il vuoto.</p>
+        <p>Poi ho scoperto un approccio diverso — un metodo che ti fa <strong>sentire</strong> la musica prima di suonarla. È quello che insegno nel <a href="#cosa-faccio">Percorso P.G.T.</a></p>
+        <p>Oggi aiuto chitarristi di ogni livello a sbloccare la propria voce, senza perdere anni dietro metodi che non funzionano.</p>
+      </div>
+
+      <div class="chi-photo" data-a="zi" style="--d:.1s">
+        <img src="https://images.unsplash.com/photo-1498038432885-c6f3f1b912ee?w=700&q=85&fit=crop&crop=center,top" alt="Marco Petta Guitar Coach" loading="lazy"/>
+      </div>
+
+      <div class="chi-r" data-a="fl" style="--d:.15s">
+        <h3 class="t-rock" style="font-size:clamp(20px,2.2rem,34px)">Da chitarrista<br><em style="color:var(--amber);font-style:italic">frustrato</em><br>a coach rock</h3>
+        <div class="stats">
+          <div data-a="fu" style="--d:.22s"><div class="stat-n">15+</div><div class="stat-l">Anni di Esperienza</div></div>
+          <div data-a="fu" style="--d:.32s"><div class="stat-n">500+</div><div class="stat-l">Studenti Formati</div></div>
+          <div data-a="fu" style="--d:.42s"><div class="stat-n">P.G.T.</div><div class="stat-l">Metodo Esclusivo</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="bwm" data-a="zo">MARCO PETTA</div>
+  </div>
+</section>
+
+<!-- ═══ TICKER 2 ═══ -->
+<div class="tkr" style="background:var(--coal3)"><div class="tkr-t" style="animation-direction:reverse">
+  <span style="color:rgba(255,255,255,.4)">UN METODO</span><span class="sep" style="color:var(--amber)"> // </span>
+  <span style="color:rgba(255,255,255,.4)">CHE FUNZIONA</span><span class="sep" style="color:var(--amber)"> // </span>
+  <span style="color:rgba(255,255,255,.4)">DAVVERO</span><span class="sep" style="color:var(--amber)"> // </span>
+  <span style="color:rgba(255,255,255,.4)">500+ STUDENTI</span><span class="sep" style="color:var(--amber)"> // </span>
+  <span style="color:rgba(255,255,255,.4)">UN METODO</span><span class="sep" style="color:var(--amber)"> // </span>
+  <span style="color:rgba(255,255,255,.4)">CHE FUNZIONA</span><span class="sep" style="color:var(--amber)"> // </span>
+  <span style="color:rgba(255,255,255,.4)">DAVVERO</span><span class="sep" style="color:var(--amber)"> // </span>
+  <span style="color:rgba(255,255,255,.4)">500+ STUDENTI</span><span class="sep" style="color:var(--amber)"> // </span>
+</div></div>
+
+<!-- ═══ COSA FACCIO ═══ -->
+<section id="cosa-faccio" class="sp">
+  <div class="bgwm" id="wm2" style="bottom:0;right:0;left:auto;top:auto">METODO</div>
+  <div class="wrap" style="position:relative;z-index:1">
+
+    <span class="t-label" data-a="fr" style="display:block;margin-bottom:14px">Cosa Faccio</span>
+    <h2 class="t-rock" style="font-size:clamp(48px,7vw,100px)" data-a="fu">
+      Un Metodo Che <span class="amber">// Funziona Davvero</span>
+    </h2>
+    <p class="t-body" data-a="fu" style="--d:.12s;margin-top:20px;max-width:600px">
+      Niente teoria inutile. Niente esercizi fini a sé stessi. Solo un percorso concreto che ti porta da dove sei a dove vuoi arrivare.
+    </p>
+
+    <div class="srv-grid">
+      <div class="srv-card" data-a="zil">
+        <div class="srv-img">
+          <img src="https://images.unsplash.com/photo-1510915361894-db8b60106cb1?w=900&q=80&fit=crop" alt="Percorso PGT" loading="lazy"/>
+        </div>
+        <div class="srv-grad"></div>
+        <div class="srv-wm">PERCORSO P.G.T.</div>
+        <div class="srv-body">
+          <span class="srv-icon">⚡</span>
+          <h3 class="t-rock" style="font-size:clamp(18px,2.2vw,28px);margin-bottom:10px">Percorso P.G.T.</h3>
+          <p>Il percorso completo che ti porta da chitarrista confuso a improvvisatore rock consapevole. Lezioni strutturate, riff reali, supporto continuo.</p>
+        </div>
+      </div>
+      <div class="srv-card" data-a="zir" style="--d:.08s">
+        <div class="srv-img">
+          <img src="https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=900&q=80&fit=crop" alt="Lezioni 1to1" loading="lazy"/>
+        </div>
+        <div class="srv-grad"></div>
+        <div class="srv-wm">LEZIONI 1-TO-1</div>
+        <div class="srv-body">
+          <span class="srv-icon">🎸</span>
+          <h3 class="t-rock" style="font-size:clamp(18px,2.2vw,28px);margin-bottom:10px">Lezioni 1-to-1</h3>
+          <p>Sessioni individuali su misura per te. Analizzo il tuo livello, individuo i blocchi e costruisco un percorso rock personalizzato.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ RISULTATI ═══ -->
+<section id="risultati" class="sp">
+  <div class="ris-bg"></div>
+  <div class="bgwm" id="wm3" style="bottom:0;left:0;top:auto">RISULTATI</div>
+  <div class="wrap" style="position:relative;z-index:1">
+
+    <span class="t-label" data-a="fr" style="display:block;margin-bottom:14px">Testimonianze</span>
+    <h2 class="t-rock" style="font-size:clamp(48px,7vw,100px)" data-a="fu">
+      I Loro <span class="amber">// Risultati</span>
+    </h2>
+    <p class="t-body" data-a="fu" style="--d:.12s;margin-top:20px;max-width:600px">
+      Non devi credermi sulla parola. Ascolta chi ha già fatto il percorso e ha trasformato il proprio modo di suonare.
+    </p>
+
+    <!-- VIDEO TESTIMONIALS GRID -->
+    <div class="vtgrid">
+
+      <!-- CARD 1 -->
+      <div class="vtcard" data-a="fu" style="--d:.08s">
+        <div class="vt-thumb">
+          <!-- Replace src with real thumbnail: <img src="thumb-gianluca.jpg" alt=""> -->
+          <div class="vt-thumb-ph" style="background:linear-gradient(135deg,#1a0a00 0%,#0a0a0a 100%)">
+            <img src="https://images.unsplash.com/photo-1510915361894-db8b60106cb1?w=600&q=80&fit=crop" alt="Gianluca M." class="vt-thumb-img"/>
+          </div>
+          <div class="vt-overlay"></div>
+          <!-- Play button -->
+          <button class="vt-play" aria-label="Guarda il video">
+            <div class="vt-play-circle">
+              <svg width="20" height="22" viewBox="0 0 20 22" fill="none"><path d="M2 2L18 11L2 20V2Z" fill="currentColor"/></svg>
+            </div>
+          </button>
+          <!-- Duration badge -->
+          <span class="vt-duration">1:42</span>
+          <!-- Red top bar -->
+          <div class="vt-topbar"></div>
+        </div>
+        <div class="vt-body">
+          <div class="vt-stars">★★★★★</div>
+          <blockquote class="vt-quote">"In 4 mesi con Marco ho cambiato tutto. Finalmente riesco a improvvisare su qualsiasi brano rock."</blockquote>
+          <div class="vt-author">
+            <div class="vt-avatar">G</div>
+            <div>
+              <div class="vt-name">Gianluca M.</div>
+              <div class="vt-role">Chitarrista rock · 8 mesi nel percorso</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD 2 -->
+      <div class="vtcard" data-a="fu" style="--d:.16s">
+        <div class="vt-thumb">
+          <div class="vt-thumb-ph">
+            <img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=600&q=80&fit=crop" alt="Alessandro R." class="vt-thumb-img"/>
+          </div>
+          <div class="vt-overlay"></div>
+          <button class="vt-play" aria-label="Guarda il video">
+            <div class="vt-play-circle">
+              <svg width="20" height="22" viewBox="0 0 20 22" fill="none"><path d="M2 2L18 11L2 20V2Z" fill="currentColor"/></svg>
+            </div>
+          </button>
+          <span class="vt-duration">2:15</span>
+          <div class="vt-topbar"></div>
+        </div>
+        <div class="vt-body">
+          <div class="vt-stars">★★★★★</div>
+          <blockquote class="vt-quote">"Non è il solito corso online: Marco ti segue davvero. Ho imparato più in 2 mesi che in 5 anni da autodidatta."</blockquote>
+          <div class="vt-author">
+            <div class="vt-avatar">A</div>
+            <div>
+              <div class="vt-name">Alessandro R.</div>
+              <div class="vt-role">Chitarrista · 6 mesi nel percorso</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD 3 -->
+      <div class="vtcard" data-a="fu" style="--d:.24s">
+        <div class="vt-thumb">
+          <div class="vt-thumb-ph">
+            <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=600&q=80&fit=crop" alt="Luca T." class="vt-thumb-img"/>
+          </div>
+          <div class="vt-overlay"></div>
+          <button class="vt-play" aria-label="Guarda il video">
+            <div class="vt-play-circle">
+              <svg width="20" height="22" viewBox="0 0 20 22" fill="none"><path d="M2 2L18 11L2 20V2Z" fill="currentColor"/></svg>
+            </div>
+          </button>
+          <span class="vt-duration">1:58</span>
+          <div class="vt-topbar"></div>
+        </div>
+        <div class="vt-body">
+          <div class="vt-stars">★★★★★</div>
+          <blockquote class="vt-quote">"Marco mi ha fatto capire il linguaggio della chitarra rock in modo completamente diverso. Il metodo P.G.T. è una svolta."</blockquote>
+          <div class="vt-author">
+            <div class="vt-avatar">L</div>
+            <div>
+              <div class="vt-name">Luca T.</div>
+              <div class="vt-role">Musicista · 4 mesi nel percorso</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD 4 -->
+      <div class="vtcard" data-a="fu" style="--d:.32s">
+        <div class="vt-thumb">
+          <div class="vt-thumb-ph">
+            <img src="https://images.unsplash.com/photo-1525201548942-d8732f6617a0?w=600&q=80&fit=crop" alt="Davide F." class="vt-thumb-img"/>
+          </div>
+          <div class="vt-overlay"></div>
+          <button class="vt-play" aria-label="Guarda il video">
+            <div class="vt-play-circle">
+              <svg width="20" height="22" viewBox="0 0 20 22" fill="none"><path d="M2 2L18 11L2 20V2Z" fill="currentColor"/></svg>
+            </div>
+          </button>
+          <span class="vt-duration">2:33</span>
+          <div class="vt-topbar"></div>
+        </div>
+        <div class="vt-body">
+          <div class="vt-stars">★★★★★</div>
+          <blockquote class="vt-quote">"La community di chitarristi rock che si è creata intorno a Marco è fantastica. Motivazione, confronto, crescita vera."</blockquote>
+          <div class="vt-author">
+            <div class="vt-avatar">D</div>
+            <div>
+              <div class="vt-name">Davide F.</div>
+              <div class="vt-role">Chitarrista · 1 anno nel percorso</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /vtgrid -->
+  </div>
+</section>
+
+<!-- ═══ PERCHÉ ME ═══ -->
+<section id="perche-me" class="sp">
+  <div class="bgwm" id="wm4" style="bottom:0;right:0;left:auto;top:auto">PERCHÉ</div>
+  <div class="wrap" style="position:relative;z-index:1">
+
+    <span class="t-label" data-a="fr" style="display:block;margin-bottom:14px">Perché Me</span>
+    <h2 class="t-rock" style="font-size:clamp(48px,7vw,100px)" data-a="fu">
+      Perché iniziare un <span class="amber">// Percorso Con Me</span>
+    </h2>
+    <p class="t-body" data-a="fu" style="--d:.12s;margin-top:20px;max-width:600px">
+      Se sei arrivato fin qui, senti che è il momento di fare un cambiamento vero. Ecco cosa ti aspetta:
+    </p>
+
+    <div class="pm-layout">
+      <ul class="pm-list">
+        <li class="pm-item" data-a="fr"><div class="pm-num">01</div><div><span class="pm-chk">⚡</span><p class="pm-txt"><strong>Metodo testato su centinaia di chitarristi rock</strong> — non teoria astratta, ma riff, lick e improvvisazione reale</p></div></li>
+        <li class="pm-item" data-a="fr" style="--d:.08s"><div class="pm-num">02</div><div><span class="pm-chk">⚡</span><p class="pm-txt"><strong>Supporto diretto e personalizzato</strong> — non sei un numero, sei un musicista con una visione unica</p></div></li>
+        <li class="pm-item" data-a="fr" style="--d:.16s"><div class="pm-num">03</div><div><span class="pm-chk">⚡</span><p class="pm-txt"><strong>Risultati visibili in settimane</strong> — il Percorso P.G.T. accelera i tuoi progressi in modo concreto e misurabile</p></div></li>
+        <li class="pm-item" data-a="fr" style="--d:.24s"><div class="pm-num">04</div><div><span class="pm-chk">⚡</span><p class="pm-txt"><strong>Community di chitarristi rock motivati</strong> — cresci insieme a persone che condividono la tua passione</p></div></li>
+        <li class="pm-item" data-a="fr" style="--d:.32s"><div class="pm-num">05</div><div><span class="pm-chk">⚡</span><p class="pm-txt"><strong>Garanzia di soddisfazione</strong> — se non vedi miglioramenti, parliamo e troviamo la soluzione insieme</p></div></li>
+      </ul>
+
+      <div class="photo-mosaic" data-a="zi" style="--d:.15s">
+        <div class="mos-img"><img src="https://images.unsplash.com/photo-1510915361894-db8b60106cb1?w=600&q=80&fit=crop" alt="" loading="lazy"/></div>
+        <div class="mos-img"><img src="https://images.unsplash.com/photo-1525201548942-d8732f6617a0?w=600&q=80&fit=crop" alt="" loading="lazy"/></div>
+        <div class="mos-img"><img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=600&q=80&fit=crop" alt="" loading="lazy"/></div>
+        <div class="mos-img"><img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=600&q=80&fit=crop" alt="" loading="lazy"/></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA BAND ═══ -->
+<section id="cta-band">
+  <div class="cta-bg" id="ctaBg"></div>
+  <div class="cta-over"></div>
+  <div class="cta-stripe"></div>
+  <div class="cta-content wrap">
+    <h2 class="t-rock" style="font-size:clamp(52px,7vw,96px)" data-a="fu">
+      Il tuo percorso<br><em>inizia qui</em>
+    </h2>
+    <p class="t-body" data-a="fu" style="--d:.1s;max-width:460px;margin:20px auto 36px">Un colloquio gratuito di 20 minuti per capire dove sei e dove vuoi arrivare. Nessun impegno.</p>
+    <a href="#contatti" class="btn btn-primary" data-a="fu" style="--d:.2s">Prenota la tua chiamata ↗</a>
+  </div>
+</section>
+
+<!-- ═══ SMARTPHONE ═══ -->
+<section id="smartphone" class="sp">
+  <div class="bgwm" id="wm5" style="bottom:0;left:0;top:auto">STUDIA</div>
+  <div class="wrap" style="position:relative;z-index:1">
+
+    <span class="t-label" data-a="fr" style="display:block;margin-bottom:14px">Studia</span>
+    <h2 class="t-rock" style="font-size:clamp(48px,7vw,100px)" data-a="fu">
+      Studia Ovunque <span class="amber">// Dal Tuo Smartphone</span>
+    </h2>
+    <p class="t-body" data-a="fu" style="--d:.12s;margin-top:20px;max-width:600px">
+      Il tuo percorso rock sempre con te, su qualsiasi dispositivo.
+    </p>
+
+    <div class="ph-layout">
+      <div class="phones" data-a="zil">
+        <div class="ph">
+          <img class="ph-bg" src="https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=400&q=80&fit=crop" alt="" loading="lazy"/>
+          <div class="ph-ov"><span class="ph-lbl">Video Lezione</span></div>
+        </div>
+        <div class="ph c">
+          <img class="ph-bg" src="https://images.unsplash.com/photo-1510915361894-db8b60106cb1?w=400&q=80&fit=crop" alt="" loading="lazy"/>
+          <div class="ph-ov"><span class="ph-lbl">Percorso P.G.T.</span></div>
+        </div>
+        <div class="ph">
+          <img class="ph-bg" src="https://images.unsplash.com/photo-1520166012956-add9ba0835cb?w=400&q=80&fit=crop" alt="" loading="lazy"/>
+          <div class="ph-ov"><span class="ph-lbl">I Tuoi Progressi</span></div>
+        </div>
+      </div>
+
+      <div class="feat-list">
+        <div class="feat" data-a="fl">
+          <div class="feat-ic">▶</div>
+          <div><h4 class="t-h4" style="margin-bottom:7px">Video Lezioni HD</h4><p>Ogni lezione disponibile in video HD. Studia riff, lick e tecniche rock al tuo ritmo, quando vuoi.</p></div>
+        </div>
+        <div class="feat" data-a="fl" style="--d:.1s">
+          <div class="feat-ic">⚡</div>
+          <div><h4 class="t-h4" style="margin-bottom:7px">Accesso da Qualsiasi Dispositivo</h4><p>Smartphone, tablet o computer — il tuo percorso rock è sempre con te. Impara anche tra un concerto e l'altro.</p></div>
+        </div>
+        <div class="feat" data-a="fl" style="--d:.2s">
+          <div class="feat-ic">🎸</div>
+          <div><h4 class="t-h4" style="margin-bottom:7px">Backing Track & Materiale Esclusivo</h4><p>Suona su basi rock professionali, accedi a tab e note e registra i tuoi progressi in ogni momento.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CONTATTI ═══ -->
+<section id="contatti" class="sp">
+  <div class="wrap" style="position:relative;z-index:1">
+    <div class="ct-layout">
+      <div class="ct-l" data-a="fr">
+        <span class="t-label" style="color:var(--red);display:block;margin-bottom:16px">Contattami</span>
+        <h2 class="t-rock" style="font-size:clamp(52px,6.5vw,88px)">Pronto a<br><span>Fare il Salto?</span></h2>
+        <p>Compila il modulo qui sotto e ti ricontatterò entro 24 ore. Nessun impegno, solo una chiacchierata per capire come posso aiutarti.</p>
+        <div class="bracket">
+          <p>Risposta garantita entro 24 ore</p>
+        </div>
+      </div>
+
+      <div class="ct-form" data-a="fl" style="--d:.1s">
+        <form name="contatti" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+          <input type="hidden" name="form-name" value="contatti"/>
+          <p style="display:none"><input name="bot-field"/></p>
+        <div class="fg"><label>Nome</label><input type="text" name="nome" placeholder="Il tuo nome" required/></div>
+        <div class="fg"><label>Cognome</label><input type="text" name="cognome" placeholder="Il tuo cognome" required/></div>
+        <div class="fg cf-full"><label>Numero di Telefono</label><input type="tel" name="telefono" placeholder="+39 000 000 0000"/></div>
+        <div class="fg cf-full"><label>Email</label><input type="email" name="email" placeholder="la-tua@email.com" required/></div>
+        <div class="fg cf-full"><label>Messaggio</label><textarea name="messaggio" placeholder="Raccontami dove sei con la chitarra e dove vuoi arrivare…"></textarea></div>
+        <button type="submit" class="btn btn-primary ct-btn">Invia Messaggio ↗</button>
+        </form>
+      </div>
+    </div>
+    <div class="ct-wm" data-a="zo">CONTATTAMI</div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="f-logo">MARCO <em>PETTA</em></div>
+  <p>© 2026 Marco Petta — Guitar Coach. Tutti i diritti riservati.</p>
+</footer>
+
+<!-- VIDEO LIGHTBOX -->
+<div id="vt-lightbox">
+  <div class="vt-lb-inner">
+    <button class="vt-lb-close" id="vt-close">✕ &nbsp;Chiudi</button>
+    <div class="vt-lb-placeholder" id="vt-lb-content">
+      <svg width="64" height="64" viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="30" stroke="white" stroke-width="2"/><path d="M24 20L46 32L24 44V20Z" fill="white"/></svg>
+      <span>Inserisci qui il link del video</span>
+      <span style="font-family:var(--fbody);font-size:.78rem;font-weight:300;letter-spacing:.1em;color:rgba(255,255,255,.2)">
+        Sostituisci .vt-lb-placeholder con &lt;iframe&gt; o &lt;video&gt;
+      </span>
+    </div>
+  </div>
+</div>
+
+<script>
+/* CURSOR */
+const cur=document.getElementById('cur'),ring=document.getElementById('cur-r');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
+(function a(){rx+=(mx-rx)*.11;ry+=(my-ry)*.11;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(a)})();
+document.querySelectorAll('a,button').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.width='16px';cur.style.height='16px';ring.style.width='50px';ring.style.height='50px';ring.style.borderColor='var(--amber)'});
+  el.addEventListener('mouseleave',()=>{cur.style.width='10px';cur.style.height='10px';ring.style.width='36px';ring.style.height='36px';ring.style.borderColor='rgba(245,166,35,.4)'});
+});
+
+/* PROGRESS + NAV */
+const prog=document.getElementById('prog'),nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>{
+  prog.style.width=(window.scrollY/(document.body.scrollHeight-window.innerHeight)*100)+'%';
+  nav.classList.toggle('s',window.scrollY>60);
+},{passive:true});
+
+/* HERO PARALLAX — 3-layer depth (CARPETMAN style)
+   bg photo : slowest  → far away
+   3D text  : medium   → mid distance
+   cutout   : same as bg → subject locked to bg plane */
+const hImg    = document.getElementById('hImg');
+const h3dText = document.getElementById('hWm');
+const hCutout = document.getElementById('hCutout');
+window.addEventListener('scroll', () => {
+  const y = window.scrollY;
+  if (hImg)    hImg.style.transform    = `scale(1.08) translateY(${y * .3}px)`;
+  if (h3dText) h3dText.style.transform = `translateY(${y * .5}px)`; // text moves faster → pops forward
+  if (hCutout) hCutout.style.transform = `translateY(${y * .3}px)`; // same as bg → stays locked
+}, {passive: true});
+
+/* CTA BG PARALLAX */
+const ctaBg=document.getElementById('ctaBg');
+window.addEventListener('scroll',()=>{
+  const r=ctaBg.parentElement.getBoundingClientRect();
+  ctaBg.style.transform=`scale(1.08) translateY(${r.top*.22}px)`;
+},{passive:true});
+
+/* SECTION BG WM PARALLAX */
+document.querySelectorAll('.bgwm').forEach(wm=>{
+  window.addEventListener('scroll',()=>{
+    const r=wm.parentElement.getBoundingClientRect();
+    wm.style.transform=`translateY(${r.top*.13}px)`;
+  },{passive:true});
+});
+
+/* SCROLL ANIMS */
+const els=document.querySelectorAll('[data-a]');
+els.forEach(el=>{el.style.transitionDelay=el.style.getPropertyValue('--d')||'0s'});
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}});
+},{threshold:.1});
+els.forEach(el=>io.observe(el));
+
+/* SMOOTH ANCHORS */
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    e.preventDefault();
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t)t.scrollIntoView({behavior:'smooth'});
+  });
+});
+
+/* VIDEO LIGHTBOX */
+const lb=document.getElementById('vt-lightbox');
+const lbContent=document.getElementById('vt-lb-content');
+const lbClose=document.getElementById('vt-close');
+
+// Video URLs per card — inserisci i tuoi link qui
+// Es: 'https://www.youtube.com/embed/VIDEO_ID' oppure percorso file locale
+const videoUrls=[
+  '', // Card 1 — Gianluca
+  '', // Card 2 — Alessandro
+  '', // Card 3 — Luca
+  '', // Card 4 — Davide
+];
+const videoNames=['Gianluca M.','Alessandro R.','Luca T.','Davide F.'];
+
+document.querySelectorAll('.vt-play').forEach((btn,i)=>{
+  btn.addEventListener('click',e=>{
+    e.stopPropagation();
+    const url=videoUrls[i];
+    if(url){
+      // YouTube / Vimeo embed
+      lbContent.innerHTML=`<iframe src="${url}?autoplay=1&rel=0" frameborder="0" allow="autoplay;fullscreen" allowfullscreen style="width:100%;height:100%"></iframe>`;
+    } else {
+      // Placeholder — no URL set yet
+      lbContent.innerHTML=`
+        <svg width="64" height="64" viewBox="0 0 64 64" fill="none" style="opacity:.2"><circle cx="32" cy="32" r="30" stroke="white" stroke-width="2"/><path d="M24 20L46 32L24 44V20Z" fill="white"/></svg>
+        <span style="font-family:var(--frock);font-size:1.1rem;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.4)">
+          Video di ${videoNames[i]}
+        </span>
+        <span style="font-family:var(--fbody);font-size:.8rem;font-weight:300;color:rgba(255,255,255,.2)">
+          Aggiungi l'URL del video in videoUrls[${i}]
+        </span>`;
+    }
+    lb.classList.add('open');
+    document.body.style.overflow='hidden';
+  });
+});
+
+// Chiudi lightbox
+function closeLb(){
+  lb.classList.remove('open');
+  lbContent.innerHTML='';
+  document.body.style.overflow='';
+}
+lbClose.addEventListener('click',closeLb);
+lb.addEventListener('click',e=>{if(e.target===lb)closeLb()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLb()});
+</script>
+</body>
+</html>
